@@ -110,7 +110,7 @@ jobs:
         if git diff --cached --quiet; then
           echo "No changes to commit."
         else
-          git commit -m "Update encrypted vae.enc cme.enc ru.enc"
+          git commit -m "Update encrypted vae.enc cme.enc"
           git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Charlotteanty/yapsy.git
         fi
         
