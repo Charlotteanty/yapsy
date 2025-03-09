@@ -73,30 +73,30 @@ jobs:
       env:
         CME_URL: ${{ secrets.CME_URL }}
     
-    - name: Secure ru Download with Retr
-      run: |
-        echo "::add-mask::$RU_URL"
-        for i in {1..100}; do
-          wget --quiet --output-document=ru "$RU_URL" && break
-          echo "Attempt $i failed, retrying in 5 seconds..."
-          sleep 5
-        done
-        if [ ! -f ru ]; then
-          echo "Download failed after 100 attempts."
-          exit 1
-        fi
-      env:
-        RU_URL: ${{ secrets.RU_URL }}
+  #  - name: Secure ru Download with Retr
+  #    run: |
+    #    echo "::add-mask::$RU_URL"
+#        for i in {1..100}; do
+    #      wget --quiet --output-document=ru "$RU_URL" && break
+      #    echo "Attempt $i failed, retrying in 5 seconds..."
+     #     sleep 5
+      #  done
+    #    if [ ! -f ru ]; then
+    #      echo "Download failed after 100 attempts."
+    #      exit 1
+    #    fi
+     # env:
+    #    RU_URL: ${{ secrets.RU_URL }}
 
-    - name: Encrypt files with OpenSSL (Secure Method)
-      run: |
-        echo "${{ secrets.ENCRYPTION_KEY }}" | openssl enc -aes-256-cbc -salt -pbkdf2 -pass stdin -in ru -out ru.enc
+   # - name: Encrypt files with OpenSSL (Secure Method)
+  #    run: |
+   #     echo "${{ secrets.ENCRYPTION_KEY }}" | openssl enc -aes-256-cbc -salt -pbkdf2 -pass stdin -in ru -out ru.enc
     #    echo "${{ secrets.ENCRYPTION_KEY }}" | openssl enc -aes-256-cbc -salt -pbkdf2 -pass stdin -in slayer -out slayer.enc
      #   echo "${{ secrets.ENCRYPTION_KEY }}" | openssl enc -aes-256-cbc -salt -pbkdf2 -pass stdin -in hyywl -out hyywl.enc
 
-    - name: Remove original files
-      run: |
-        shred -u ru
+  #  - name: Remove original files
+   #   run: |
+       # shred -u ru
       #  shred -u slayer hyywl
 
     - name: Add and commit changes if needed
@@ -104,7 +104,7 @@ jobs:
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
 
-        git add vae.enc cme.enc ru.enc
+        git add vae.enc cme.enc
         git status
 
         if git diff --cached --quiet; then
