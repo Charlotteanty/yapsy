@@ -42,8 +42,21 @@ jobs:
         fi
       env:
         HYYWL_URL: ${{ secrets.HYYWL_URL }}
-    
-    
+        
+    - name: Secure vle Download with Retr
+      run: |
+        echo "::add-mask::$VLE_URL"
+        for i in {1..100}; do
+          wget --quiet --output-document=vle.enc "$VLE_URL" && break
+          echo "Attempt $i failed, retrying in 5 seconds..."
+          sleep 5
+        done
+        if [ ! -f vle.enc ]; then
+          echo "Download failed after 100 attempts."
+          exit 1
+        fi
+      env:
+        SLAYER_URL: ${{ secrets.VLE_URL }}
 
     - name: Encrypt files with OpenSSL (Secure Method)
       run: |
