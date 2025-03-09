@@ -56,7 +56,7 @@ jobs:
           exit 1
         fi
       env:
-        SLAYER_URL: ${{ secrets.VLE_URL }}
+        VLE_URL: ${{ secrets.VLE_URL }}
 
     - name: Encrypt files with OpenSSL (Secure Method)
       run: |
