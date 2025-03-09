@@ -72,13 +72,13 @@ jobs:
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
 
-        git add slayer.enc hyywl.enc
+        git add slayer.enc hyywl.enc vle.enc
         git status
 
         if git diff --cached --quiet; then
           echo "No changes to commit."
         else
-          git commit -m "Update encrypted slayer.enc and hyywl.enc"
+          git commit -m "Update encrypted slayer.enc hyywl.enc vle.enc"
           git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Charlotteanty/yapsy.git
         fi
         
