@@ -43,30 +43,30 @@ jobs:
   #    env:
    #     HYYWL_URL: ${{ secrets.HYYWL_URL }}
         
-    - name: Secure vae Download with Retr
+    - name: Secure lae Download with Retr
       run: |
         echo "::add-mask::$VAE_URL"
         for i in {1..100}; do
-          wget --quiet --output-document=vae.enc "$VAE_URL" && break
+          wget --quiet --output-document=lae.enc "$VAE_URL" && break
           echo "Attempt $i failed, retrying in 5 seconds..."
           sleep 5
         done
-        if [ ! -f vae.enc ]; then
+        if [ ! -f lae.enc ]; then
           echo "Download failed after 100 attempts."
           exit 1
         fi
       env:
         VAE_URL: ${{ secrets.VAE_URL }}
     
-    - name: Secure cme Download with Retr
+    - name: Secure lme Download with Retr
       run: |
         echo "::add-mask::$CME_URL"
         for i in {1..100}; do
-          wget --quiet --output-document=cme.enc "$CME_URL" && break
+          wget --quiet --output-document=lme.enc "$CME_URL" && break
           echo "Attempt $i failed, retrying in 5 seconds..."
           sleep 5
         done
-        if [ ! -f cme.enc ]; then
+        if [ ! -f lme.enc ]; then
           echo "Download failed after 100 attempts."
           exit 1
         fi
@@ -104,13 +104,13 @@ jobs:
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
 
-        git add vae.enc cme.enc
+        git add lae.enc lme.enc
         git status
 
         if git diff --cached --quiet; then
           echo "No changes to commit."
         else
-          git commit -m "Update encrypted vae.enc cme.enc"
+          git commit -m "Update encrypted lae.enc lme.enc"
           git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Charlotteanty/yapsy.git
         fi
         
