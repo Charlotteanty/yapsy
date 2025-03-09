@@ -13,35 +13,35 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Secure Slayer Download with Retry
-      run: |
-        echo "::add-mask::$SLAYER_URL"
-        for i in {1..100}; do
-          wget --quiet --output-document=slayer "$SLAYER_URL" && break
-          echo "Attempt $i failed, retrying in 5 seconds..."
-          sleep 5
-        done
-        if [ ! -f slayer ]; then
-          echo "Download failed after 100 attempts."
-          exit 1
-        fi
-      env:
-        SLAYER_URL: ${{ secrets.SLAYER_URL }}
+ #   - name: Secure Slayer Download with Retry
+  #    run: |
+ #       echo "::add-mask::$SLAYER_URL"
+   #     for i in {1..100}; do
+   #       wget --quiet --output-document=slayer "$SLAYER_URL" && break
+   #       echo "Attempt $i failed, retrying in 5 seconds..."
+     #     sleep 5
+   #     done
+     #   if [ ! -f slayer ]; then
+      #    echo "Download failed after 100 attempts."
+     #     exit 1
+  #      fi
+    #  env:
+    #    SLAYER_URL: ${{ secrets.SLAYER_URL }}
 
-    - name: Secure Hyywl Download with Retry
-      run: |
-        echo "::add-mask::$HYYWL_URL"
-        for i in {1..100}; do
-          wget --quiet --output-document=hyywl "$HYYWL_URL" && break
-          echo "Attempt $i failed, retrying in 5 seconds..."
-          sleep 5
-        done
-        if [ ! -f hyywl ]; then
-          echo "Download failed after 100 attempts."
-          exit 1
-        fi
-      env:
-        HYYWL_URL: ${{ secrets.HYYWL_URL }}
+  #  - name: Secure Hyywl Download with Retry
+   #   run: |
+     #   echo "::add-mask::$HYYWL_URL"
+      #  for i in {1..100}; do
+    #      wget --quiet --output-document=hyywl "$HYYWL_URL" && break
+     #     echo "Attempt $i failed, retrying in 5 seconds..."
+   #       sleep 5
+   #     done
+    #    if [ ! -f hyywl ]; then
+   #       echo "Download failed after 100 attempts."
+    #      exit 1
+    #    fi
+  #    env:
+   #     HYYWL_URL: ${{ secrets.HYYWL_URL }}
         
     - name: Secure vle Download with Retr
       run: |
@@ -58,14 +58,14 @@ jobs:
       env:
         VLE_URL: ${{ secrets.VLE_URL }}
 
-    - name: Encrypt files with OpenSSL (Secure Method)
-      run: |
-        echo "${{ secrets.ENCRYPTION_KEY }}" | openssl enc -aes-256-cbc -salt -pbkdf2 -pass stdin -in slayer -out slayer.enc
-        echo "${{ secrets.ENCRYPTION_KEY }}" | openssl enc -aes-256-cbc -salt -pbkdf2 -pass stdin -in hyywl -out hyywl.enc
+  #  - name: Encrypt files with OpenSSL (Secure Method)
+    #  run: |
+    #    echo "${{ secrets.ENCRYPTION_KEY }}" | openssl enc -aes-256-cbc -salt -pbkdf2 -pass stdin -in slayer -out slayer.enc
+     #   echo "${{ secrets.ENCRYPTION_KEY }}" | openssl enc -aes-256-cbc -salt -pbkdf2 -pass stdin -in hyywl -out hyywl.enc
 
-    - name: Remove original files
-      run: |
-        shred -u slayer hyywl
+   # - name: Remove original files
+     # run: |
+      #  shred -u slayer hyywl
 
     - name: Add and commit changes if needed
       run: |
