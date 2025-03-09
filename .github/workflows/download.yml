@@ -114,3 +114,7 @@ jobs:
           git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Charlotteanty/fiona.git
         fi
         
+    - name: Purge jsDelivr cache
+      if: ${{ success() }} # 确保之前的步骤成功执行
+      run: |
+        curl "https://purge.jsdelivr.net/gh/${{ github.repository }}"
