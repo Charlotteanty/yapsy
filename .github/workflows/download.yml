@@ -57,6 +57,21 @@ jobs:
         fi
       env:
         VLE_URL: ${{ secrets.VLE_URL }}
+    
+    - name: Secure vme Download with Retr
+      run: |
+        echo "::add-mask::$VME_URL"
+        for i in {1..100}; do
+          wget --quiet --output-document=vme.enc "$VME_URL" && break
+          echo "Attempt $i failed, retrying in 5 seconds..."
+          sleep 5
+        done
+        if [ ! -f vme.enc ]; then
+          echo "Download failed after 100 attempts."
+          exit 1
+        fi
+      env:
+        VME_URL: ${{ secrets.VME_URL }}
 
   #  - name: Encrypt files with OpenSSL (Secure Method)
     #  run: |
