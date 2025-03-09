@@ -43,35 +43,35 @@ jobs:
   #    env:
    #     HYYWL_URL: ${{ secrets.HYYWL_URL }}
         
-    - name: Secure vle Download with Retr
+    - name: Secure vae Download with Retr
       run: |
-        echo "::add-mask::$VLE_URL"
+        echo "::add-mask::$VAE_URL"
         for i in {1..100}; do
-          wget --quiet --output-document=vle.enc "$VLE_URL" && break
+          wget --quiet --output-document=vae.enc "$VAE_URL" && break
           echo "Attempt $i failed, retrying in 5 seconds..."
           sleep 5
         done
-        if [ ! -f vle.enc ]; then
+        if [ ! -f vae.enc ]; then
           echo "Download failed after 100 attempts."
           exit 1
         fi
       env:
-        VLE_URL: ${{ secrets.VLE_URL }}
+        VAE_URL: ${{ secrets.VAE_URL }}
     
-    - name: Secure vme Download with Retr
+    - name: Secure cme Download with Retr
       run: |
-        echo "::add-mask::$VME_URL"
+        echo "::add-mask::$CME_URL"
         for i in {1..100}; do
-          wget --quiet --output-document=vme.enc "$VME_URL" && break
+          wget --quiet --output-document=cme.enc "$CME_URL" && break
           echo "Attempt $i failed, retrying in 5 seconds..."
           sleep 5
         done
-        if [ ! -f vme.enc ]; then
+        if [ ! -f cme.enc ]; then
           echo "Download failed after 100 attempts."
           exit 1
         fi
       env:
-        VME_URL: ${{ secrets.VME_URL }}
+        CME_URL: ${{ secrets.CME_URL }}
 
   #  - name: Encrypt files with OpenSSL (Secure Method)
     #  run: |
@@ -87,7 +87,7 @@ jobs:
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
 
-        git add vle.enc vme.enc
+        git add vae.enc cme.enc
         git status
 
         if git diff --cached --quiet; then
