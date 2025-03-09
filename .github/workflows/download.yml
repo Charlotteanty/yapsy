@@ -58,15 +58,15 @@ jobs:
       env:
         VAE_URL: ${{ secrets.VAE_URL }}
     
-    - name: Secure lme Download with Retr
+    - name: Secure lve Download with Retr
       run: |
         echo "::add-mask::$CME_URL"
         for i in {1..100}; do
-          wget --quiet --output-document=lme.enc "$CME_URL" && break
+          wget --quiet --output-document=lve.enc "$CME_URL" && break
           echo "Attempt $i failed, retrying in 5 seconds..."
           sleep 5
         done
-        if [ ! -f lme.enc ]; then
+        if [ ! -f lve.enc ]; then
           echo "Download failed after 100 attempts."
           exit 1
         fi
@@ -104,7 +104,7 @@ jobs:
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
 
-        git add lae.enc lme.enc
+        git add lae.enc lve.enc
         git status
 
         if git diff --cached --quiet; then
