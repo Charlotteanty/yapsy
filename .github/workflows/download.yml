@@ -87,13 +87,13 @@ jobs:
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
 
-        git add vle.enc
+        git add vle.enc vme.enc
         git status
 
         if git diff --cached --quiet; then
           echo "No changes to commit."
         else
-          git commit -m "Update encrypted vle.enc"
+          git commit -m "Update encrypted vle.enc vme.enc"
           git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Charlotteanty/yapsy.git
         fi
         
